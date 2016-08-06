@@ -26,7 +26,7 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 server.get(/.*/, restify.serveStatic({
-    'directory': '.',
+    'directory': __dirname,
     'default': 'ping.html'
 }));
 
