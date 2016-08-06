@@ -30,6 +30,15 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
+function cardForPaper(paper) {
+    var paperCard = new builder.HeroCard(session);
+    paperCard.title = paper.title;
+    paperCard.subtitle = util.format('ID: %s, Version: %s, Published: %s', paper.id, paper.version, paper.pubdate);
+    paperCard.text = paper.summary;
+    paperCard.tap = builder.CardAction.openUrl(session, paper.uri);
+    return paperCard;
+}
+
 var dialog = new builder.IntentDialog({recognizers: [recognizer]});
 bot.dialog('/', dialog);
 dialog.matches('add-interest', [
@@ -80,15 +89,8 @@ dialog.matches('find-papers', [
             session.send('Great, searching for papers on "%s"', interests.join('", "'));
             arxiv.queryArxiv(interests, 5).then(function (papers) {
                 papers.forEach(function (paper) {
-
-                   var paperCard = new builder.HeroCard(session);
-                   paperCard.title = paper.title;
-                   paperCard.subtitle = util.format('ID: %s, Version: %s, Published: %s', paper.id, paper.version, paper.pubdate);
-                   paperCard.text = paper.summary;
-                   paperCard.tap = builder.CardAction.openUrl(session, paper.uri);
-
                    console.log('Found: ' + paper.title);
-                   session.send(paperCard);
+                   session.send(cardForPaper(paper));
                 });
             }).catch(function (err) {
                 session.send('Error fetching papers: ' + err);
