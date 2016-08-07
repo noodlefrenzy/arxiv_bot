@@ -37,8 +37,8 @@ server.get(/.*/, restify.serveStatic({
 function cardForPaper(session, paper) {
     var paperCard = new builder.HeroCard(session);
     paperCard.title = paper.title;
-    paperCard.subtitle = util.format('ID: %s, Version: %s, Published: %s', paper.id, paper.version, paper.pubdate);
-    paperCard.text = util.format('<a href="%s">%s</a><br/><div style="font-size: 75%">%s</div>', paper.uri, paper.title, paper.summary);
+    paperCard.subtitle = util.format(' || ID: %s, Version: %s, Published: %s || ', paper.id, paper.version, paper.pubdate);
+    paperCard.text = util.format('# [%s](%s)\n%s', paper.title, paper.uri, paper.summary);
     paperCard.tap = builder.CardAction.openUrl(session, paper.uri);
     return paperCard;
 }
