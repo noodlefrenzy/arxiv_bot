@@ -34,7 +34,7 @@ server.get(/.*/, restify.serveStatic({
 // Bots Dialogs
 //=========================================================
 
-function cardForPaper(paper) {
+function cardForPaper(session, paper) {
     var paperCard = new builder.HeroCard(session);
     paperCard.title = paper.title;
     paperCard.subtitle = util.format('ID: %s, Version: %s, Published: %s', paper.id, paper.version, paper.pubdate);
@@ -94,7 +94,7 @@ dialog.matches('find-papers', [
             arxiv.queryArxiv(interests, 5).then(function (papers) {
                 papers.forEach(function (paper) {
                    console.log('Found: ' + paper.title);
-                   session.send(cardForPaper(paper));
+                   session.send(cardForPaper(session, paper));
                 });
             }).catch(function (err) {
                 session.send('Error fetching papers: ' + err);
