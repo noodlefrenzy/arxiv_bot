@@ -38,7 +38,7 @@ function cardForPaper(session, paper) {
     var paperCard = new builder.HeroCard(session);
     paperCard.title = paper.title;
     paperCard.subtitle = util.format('ID: %s, Version: %s, Published: %s', paper.id, paper.version, paper.pubdate);
-    paperCard.text = paper.summary;
+    paperCard.text = util.format('<a href="%s">%s</a>', paper.uri, paper.title);
     paperCard.tap = builder.CardAction.openUrl(session, paper.uri);
     return paperCard;
 }
