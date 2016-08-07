@@ -40,6 +40,7 @@ function cardForPaper(session, paper) {
     paperCard.subtitle = util.format(' || ID: %s, Version: %s, Published: %s || ', paper.id, paper.version, paper.pubdate);
     paperCard.text = util.format('# [%s](%s)\n%s', paper.title, paper.uri, paper.summary);
     paperCard.tap = builder.CardAction.openUrl(session, paper.uri);
+    paperCard.images = [builder.CardImage(session, 'http://iconbug.com/data/5b/507/52ff0e80b07d28b590bbc4b30befde52.png')];
     return paperCard;
 }
 
